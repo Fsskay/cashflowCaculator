@@ -3,7 +3,7 @@ import {Tabs, Tab} from '../components/Tabs'
 import PriceList from "../components/PriceList";
 import MonthPicker from "../components/MonthPicker"
 import CreateBtn from "../components/CreateBtn";
-import {parseToYearAndMonth,flatternArr} from '../unility'
+import {parseToYearAndMonth,flatternArr,TYPE_OUTCOME} from '../unility'
 import TotalPrice from "../components/TotalPrice"
 import {testCategories, testItems} from "../testData"
 
@@ -36,6 +36,9 @@ class Home extends Component {
     }
 
 
+
+
+
     render() {
         const {currentDate,Categories,Items} = this.state
 
@@ -48,6 +51,14 @@ class Home extends Component {
         console.log('Items',Items)
         console.log('itemsWithCategory',itemsWithCategory)
 
+        let totalIncome = 0, totalOutcome=0;
+        itemsWithCategory.forEach(item=>{
+            if (item.category.type ===TYPE_OUTCOME){
+                totalOutcome += item.price
+            } else{
+                totalIncome += item.price
+            }
+        })
         return (
             <React.Fragment>
                 <div>
@@ -58,7 +69,7 @@ class Home extends Component {
                     />
                 </div>
                 <div>
-                    <TotalPrice income={1234} outcome={1234}/>
+                    <TotalPrice income={totalIncome} outcome={totalOutcome}/>
                 </div>
                 <div>
                     <React.Fragment>
