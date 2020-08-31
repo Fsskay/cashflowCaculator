@@ -62,7 +62,7 @@ class MonthPicker extends Component {
                 <div ref={(ref)=>{this.node=ref}}>
                     <h2>选择月份</h2>
                     <button onClick={this.toggleDropdown}>{`${year}年 ${padLeft(month)}月`}</button>
-                </div>
+
                 { toggleDropdownON &&
                     <div className="dropdown-menu" style={{display: 'block'}}>
                         <div>
@@ -81,6 +81,7 @@ class MonthPicker extends Component {
                         </div>
                     </div>
                 }
+                </div>
             </React.Fragment>
         );
     }

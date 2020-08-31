@@ -15,7 +15,7 @@ class PriceList extends Component {
                         <li>
                             <li>{item.category.name}</li>
                             <li>{item.title}</li>
-                            <li>{item.price}</li>
+                            <li>{(item.category.type==="income")?'+':'-'}{item.price}</li>
                             <li>{item.date}</li>
                             <a href="#">编辑按钮</a>
                             <a href="#">删除按钮</a>

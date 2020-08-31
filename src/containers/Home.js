@@ -3,7 +3,7 @@ import {Tabs, Tab} from '../components/Tabs'
 import PriceList from "../components/PriceList";
 import MonthPicker from "../components/MonthPicker"
 import CreateBtn from "../components/CreateBtn";
-import {parseToYearAndMonth,flatternArr,TYPE_OUTCOME} from '../unility'
+import {parseToYearAndMonth,flatternArr,padLeft} from '../unility'
 import TotalPrice from "../components/TotalPrice"
 import {testCategories, testItems} from "../testData"
 
@@ -45,6 +45,8 @@ class Home extends Component {
         const itemsWithCategory = Object.keys(Items).map(id => {
             Items[id].category = Categories[Items[id].cid];
             return Items[id]
+        }).filter(item =>{
+           return  item.monthCategory.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
         })
 
         console.log('Categories',Categories)
@@ -53,7 +55,7 @@ class Home extends Component {
 
         let totalIncome = 0, totalOutcome=0;
         itemsWithCategory.forEach(item=>{
-            if (item.category.type ===TYPE_OUTCOME){
+            if (item.category.type ==='outcome'){
                 totalOutcome += item.price
             } else{
                 totalIncome += item.price
