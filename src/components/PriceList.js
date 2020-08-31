@@ -7,7 +7,8 @@ class PriceList extends Component {
     }
 
     render() {
-        const {items} = this.props
+        const {items,onDeleteItem} = this.props
+
         return (
             <ul>
                 {
@@ -18,7 +19,7 @@ class PriceList extends Component {
                             <li>{(item.category.type==="income")?'+':'-'}{item.price}</li>
                             <li>{item.date}</li>
                             <a href="#">编辑按钮</a>
-                            <a href="#">删除按钮</a>
+                            <a href="#" onClick={(event)=>{onDeleteItem(item)}}>删除按钮</a>
                         </li>
                     ))
                 }

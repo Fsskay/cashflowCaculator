@@ -3,21 +3,25 @@ import React, {Component} from "react";
 export class Tabs extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            activeIndex:props.activeIndex
-        }
+
     }
+
+
+
+
 
     render() {
         const {children} = this.props
-        const {activeIndex} = this.state;
+
         return (
             <ul>
                 {
                     React.Children.map(children,(child,index)=>{
                         return (
                             <li>
-                                <a href="#" key={index}>{child}</a>
+                                <a href="#"
+                                   key={index}
+                                   onClick={(event) => {this.props.onChangeTabs(index)}}>{child}</a>
                             </li>
                         )
                     })
@@ -28,4 +32,4 @@ export class Tabs extends React.Component {
 }
 
 export const Tab = ({children}) =>
-    <React.Fragment>children</React.Fragment>
+    <React.Fragment>{children}</React.Fragment>

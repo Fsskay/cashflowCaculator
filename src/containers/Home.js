@@ -3,61 +3,69 @@ import {Tabs, Tab} from '../components/Tabs'
 import PriceList from "../components/PriceList";
 import MonthPicker from "../components/MonthPicker"
 import CreateBtn from "../components/CreateBtn";
-import {parseToYearAndMonth,flatternArr,padLeft} from '../unility'
+import {parseToYearAndMonth, flatternArr, padLeft,LIST_VIEW, CHART_VIEW,} from '../unility'
 import TotalPrice from "../components/TotalPrice"
 import {testCategories, testItems} from "../testData"
+import {AppContext} from "../App"
+import withContext from "../WithContext";
 
-
+const tabsText = [LIST_VIEW, CHART_VIEW]
 
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentDate: parseToYearAndMonth(),
-            Categories:flatternArr(testCategories),
-            Items:flatternArr(testItems),
+            tabView:tabsText[0]
         }
     }
 
 
-
     changeDate = (year, month) => {
         this.setState({
-            currentDate:{year,month}
+            currentDate: {year, month}
         })
     }
 
-    changeTabs = () => {
-
+    changeViews = (index) => {
+        this.setState({
+            tabView:tabsText[index]
+        })
     }
 
-    createItem=()=>{
+
+
+
+    createItem = () => {
 
     }
+    deleteItem = () => {
 
+    }
+    modifyItem = () => {
 
-
+    }
 
 
     render() {
-        const {currentDate,Categories,Items} = this.state
+        const {data} = this.props
+        const {items,categories} = data
+        console.log(data)
+        const {currentDate,tabView} = this.state
 
-        const itemsWithCategory = Object.keys(Items).map(id => {
-            Items[id].category = Categories[Items[id].cid];
-            return Items[id]
-        }).filter(item =>{
-           return  item.monthCategory.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
+        const itemsWithCategory = Object.keys(items).map(id => {
+            items[id].category = categories[items[id].cid];
+            return items[id]
+        }).filter(item => {
+            return item.monthCategory.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
         })
 
-        console.log('Categories',Categories)
-        console.log('Items',Items)
-        console.log('itemsWithCategory',itemsWithCategory)
 
-        let totalIncome = 0, totalOutcome=0;
-        itemsWithCategory.forEach(item=>{
-            if (item.category.type ==='outcome'){
+        let totalIncome = 0, totalOutcome = 0;
+        itemsWithCategory.forEach(item => {
+            if (item.category.type === 'outcome') {
                 totalOutcome += item.price
-            } else{
+            } else {
                 totalIncome += item.price
             }
         })
@@ -75,7 +83,7 @@ class Home extends Component {
                 </div>
                 <div>
                     <React.Fragment>
-                        <Tabs activeIndex={0} onChangeTabs={this.changeTabs}>
+                        <Tabs activeIndex={0} onChangeTabs={this.changeViews}>
                             <Tab>
                                 列表模式
                             </Tab>
@@ -84,14 +92,26 @@ class Home extends Component {
                             </Tab>
                         </Tabs>
                     </React.Fragment>
-                    <CreateBtn CreateBtnOnClick = {this.createItem}/>
+                    <CreateBtn CreateBtnOnClick={this.createItem}/>
                 </div>
-                <div>
-                    <PriceList items={itemsWithCategory}/>
-                </div>
+                {
+                    tabView === LIST_VIEW &&
+                    <PriceList items={itemsWithCategory} onDeleteItem={this.deleteItem} onModifyItem={this.modifyItem}/>
+                }
+                {   tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
+                    <div className="alert alert-light text-center no-record">
+                        您还没有任何记账记录
+                    </div>
+                }
+                {
+                    tabView === CHART_VIEW &&
+                        <h2>这里是图表模式</h2>
+                }
+
+
             </React.Fragment>
         )
     }
 }
 
-export default Home
+export default withContext(Home)
