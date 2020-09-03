@@ -27,7 +27,7 @@ class Home extends Component {
         })
     }
 
-    changeViews = (index) => {
+    homeChangeViews = (index) => {
         this.setState({
             tabView:tabsText[index]
         })
@@ -83,7 +83,7 @@ class Home extends Component {
                 </div>
                 <div>
                     <React.Fragment>
-                        <Tabs activeIndex={0} onChangeTabs={this.changeViews}>
+                        <Tabs activeIndex={0} onChangeTabs={this.homeChangeViews}>
                             <Tab>
                                 列表模式
                             </Tab>
