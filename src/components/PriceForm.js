@@ -62,6 +62,7 @@ class PriceForm extends Component {
                                this.titleInput = input
                            }}
                            id="title"
+                           defaultValue={title}
                     />
                 </div>
                 <div>
@@ -71,6 +72,7 @@ class PriceForm extends Component {
                                this.priceInput = input
                            }}
                            id="price"
+                           defaultValue={price}
                     />
                 </div>
                 <div>
@@ -80,6 +82,7 @@ class PriceForm extends Component {
                                this.dateInput = input
                            }}
                            id="date"
+                           defaultValue={date}
                     />
                 </div>
                 <button type="submit">提交</button>

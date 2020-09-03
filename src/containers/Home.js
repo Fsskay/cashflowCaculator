@@ -3,7 +3,7 @@ import {Tabs, Tab} from '../components/Tabs'
 import PriceList from "../components/PriceList";
 import MonthPicker from "../components/MonthPicker"
 import CreateBtn from "../components/CreateBtn";
-import {parseToYearAndMonth, flatternArr, padLeft,LIST_VIEW, CHART_VIEW,} from '../unility'
+import {parseToYearAndMonth, flatternArr, padLeft, LIST_VIEW, CHART_VIEW,} from '../unility'
 import TotalPrice from "../components/TotalPrice"
 import {testCategories, testItems} from "../testData"
 import {AppContext} from "../App"
@@ -16,7 +16,7 @@ class Home extends Component {
         super(props);
         this.state = {
             currentDate: parseToYearAndMonth(),
-            tabView:tabsText[0]
+            tabView: tabsText[0]
         }
     }
 
@@ -29,29 +29,27 @@ class Home extends Component {
 
     homeChangeViews = (index) => {
         this.setState({
-            tabView:tabsText[index]
+            tabView: tabsText[index]
         })
     }
 
 
-
-
     createItem = () => {
-
+        this.props.history.push('/create')
     }
     deleteItem = () => {
 
     }
-    modifyItem = () => {
-
+    modifyItem = (item) => {
+        this.props.history.push(`/edit/${item.id}`)
     }
 
 
     render() {
         const {data} = this.props
-        const {items,categories} = data
+        const {items, categories} = data
         console.log(data)
-        const {currentDate,tabView} = this.state
+        const {currentDate, tabView} = this.state
 
         const itemsWithCategory = Object.keys(items).map(id => {
             items[id].category = categories[items[id].cid];
@@ -71,17 +69,20 @@ class Home extends Component {
         })
         return (
             <React.Fragment>
-                <div>
-                    <MonthPicker
-                        year={currentDate.year}
-                        month={currentDate.month}
-                        onChange={this.changeDate}
-                    />
+
+                <div className="row">
+                    <div className="col">
+                        <MonthPicker
+                            year={currentDate.year}
+                            month={currentDate.month}
+                            onChange={this.changeDate}
+                        />
+                    </div>
+                    <div  className="col">
+                        <TotalPrice income={totalIncome} outcome={totalOutcome}/>
+                    </div>
                 </div>
-                <div>
-                    <TotalPrice income={totalIncome} outcome={totalOutcome}/>
-                </div>
-                <div>
+                <div className="content-area py-3 px-3">
                     <React.Fragment>
                         <Tabs activeIndex={0} onChangeTabs={this.homeChangeViews}>
                             <Tab>
@@ -98,14 +99,14 @@ class Home extends Component {
                     tabView === LIST_VIEW &&
                     <PriceList items={itemsWithCategory} onDeleteItem={this.deleteItem} onModifyItem={this.modifyItem}/>
                 }
-                {   tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
-                    <div className="alert alert-light text-center no-record">
-                        您还没有任何记账记录
-                    </div>
+                {tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
+                <div className="alert alert-light text-center no-record">
+                    您还没有任何记账记录
+                </div>
                 }
                 {
                     tabView === CHART_VIEW &&
-                        <h2>这里是图表模式</h2>
+                    <h2>这里是图表模式</h2>
                 }
 
 

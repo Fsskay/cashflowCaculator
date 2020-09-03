@@ -1,36 +1,48 @@
 import React, {Component} from "react";
-
-class CategorySelect extends Component{
- constructor(props) {
-     super(props);
- }
-
- selectCategory2=(event,category)=>{
-     this.props.onSelectCategory(category)
-     event.preventDefault()
- }
+import {Colors} from '../unility'
 
 
- render() {
-     const {CategoriesOfSelect} = this.props
-     console.log('Categories',CategoriesOfSelect);
-     return (
 
-         <div>
-             {
-                 CategoriesOfSelect.map((category,index)=>{
-                     return(
-                         <div onClick={(event)=>{this.selectCategory2(event,category)}}>
-                             <p>{category.name}</p>
-                         </div>
-                     )
-                 })
-             }
+class CategorySelect extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            selectedCategoryId: props.selectedCategory && props.selectedCategory.id
+
+        }
+    }
+
+    selectCategory2 = (event, category) => {
+        this.props.onSelectCategory(category)
+        event.preventDefault()
+    }
 
 
-         </div>
-     );
- }
+    render() {
+        const {CategoriesOfSelect,selectedCategory} = this.props
+        const selectedCategoryId = selectedCategory && selectedCategory.id
+        console.log('CategoriesOfSelect', CategoriesOfSelect);
+        return (
+
+            <div className="row">
+                {
+                    CategoriesOfSelect.map((category, index) => {
+                        const activeClassName = (selectedCategoryId ===category.id)?'category-item col-3 selectedCategory-active':'category-item col-3';
+                        return (
+                            <div className={activeClassName}
+                                 onClick={(event) => {
+                                     this.selectCategory2(event, category)
+                                 }}>
+                                <p>{category.name}</p>
+                            </div>
+                        )
+                    })
+                }
+
+
+            </div>
+        );
+    }
 
 }
 

@@ -29,16 +29,15 @@ class App extends Component {
           actions: this.actions
         }}>
 
-            <div className="App">
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                  Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <Home/>
-                <Create/>
-              </header>
-            </div>
+            <Router>
+                <div className="App">
+                    <div className="container  pb-5">
+                        <Route path="/" exact component={Home}/>
+                        <Route path="/Create" component={Create}/>
+                        <Route path="/edit/:id" component={Create}/>
+                    </div>
+                </div>
+            </Router>
 
         </AppContext.Provider>
     );

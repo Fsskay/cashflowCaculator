@@ -23,12 +23,12 @@ export class Tabs extends Component {
         const {children} = this.props
         const {activeIndex} = this.state
         return (
-            <ul>
+            <ul  class="nav nav-tabs nav-fill my-4 ">
                 {
                     React.Children.map(children,(child,index)=>{
                         const activeClassName = (activeIndex === index) ? 'nav-link active' : 'nav-link';
                         return (
-                            <li>
+                            <li  className="nav-item ">
                                 <a href="#"
                                    key={index}
                                    onClick={(event) => {this.TabsChange(event,index)}}

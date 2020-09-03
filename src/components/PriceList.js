@@ -7,19 +7,20 @@ class PriceList extends Component {
     }
 
     render() {
-        const {items,onDeleteItem} = this.props
+        const {items,onDeleteItem,onModifyItem} = this.props
 
         return (
-            <ul>
+            <ul className="list-group list-group-flush">
                 {
                     items.map((item) => (
-                        <li>
-                            <li>{item.category.name}</li>
-                            <li>{item.title}</li>
-                            <li>{(item.category.type==="income")?'+':'-'}{item.price}</li>
-                            <li>{item.date}</li>
-                            <a href="#">编辑按钮</a>
-                            <a href="#" onClick={(event)=>{onDeleteItem(item)}}>删除按钮</a>
+                        <li className="list-group-item d-flex
+                        justify-content-between align-item-center">
+                            <span className="col-1">{item.category.name}</span>
+                            <span className="col-5">{item.title}</span>
+                            <span className="col-2">{(item.category.type==="income")?'+':'-'}{item.price}</span>
+                            <span className="col-2">{item.date}</span>
+                            <a href="#" className="col-1" onClick={(event)=>{onModifyItem(item)}}>编辑</a>
+                            <a href="#" onClick={(event)=>{onDeleteItem(item)}} className="col-1">删除</a>
                         </li>
                     ))
                 }
