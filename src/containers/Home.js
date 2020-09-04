@@ -34,11 +34,11 @@ class Home extends Component {
     }
 
 
+    deleteItem = (item) => {
+        this.props.actions.deleteItem(item)
+    }
     createItem = () => {
         this.props.history.push('/create')
-    }
-    deleteItem = () => {
-
     }
     modifyItem = (item) => {
         this.props.history.push(`/edit/${item.id}`)
@@ -48,9 +48,8 @@ class Home extends Component {
     render() {
         const {data} = this.props
         const {items, categories} = data
-        console.log(data)
+        console.log('data',data)
         const {currentDate, tabView} = this.state
-
         const itemsWithCategory = Object.keys(items).map(id => {
             items[id].category = categories[items[id].cid];
             return items[id]

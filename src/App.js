@@ -17,6 +17,14 @@ class App extends Component {
       categories:flatternArr(testCategories),
       items:flatternArr(testItems),
     }
+    this.actions = {
+        deleteItem:(item) =>{
+            delete this.state.items[item.id]
+            this.setState({
+                items:this.state.items
+            })
+        }
+    }
   }
 
 
