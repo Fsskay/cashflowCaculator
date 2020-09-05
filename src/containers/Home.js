@@ -6,8 +6,10 @@ import CreateBtn from "../components/CreateBtn";
 import {parseToYearAndMonth, flatternArr, padLeft, LIST_VIEW, CHART_VIEW,} from '../unility'
 import TotalPrice from "../components/TotalPrice"
 import {testCategories, testItems} from "../testData"
-import {AppContext} from "../App"
+
 import withContext from "../WithContext";
+import {withRouter} from 'react-router-dom'
+
 
 const tabsText = [LIST_VIEW, CHART_VIEW]
 
@@ -16,7 +18,8 @@ class Home extends Component {
         super(props);
         this.state = {
             currentDate: parseToYearAndMonth(),
-            tabView: tabsText[0]
+            tabView: tabsText[0],
+            itemsWithCategory:[]
         }
     }
 
@@ -49,14 +52,22 @@ class Home extends Component {
         const {data} = this.props
         const {items, categories} = data
         console.log('data',data)
+        console.log('items',items)
+        console.log('categories',categories)
+
+
         const {currentDate, tabView} = this.state
+        console.log('currentDate',currentDate);
+        console.log('currentDate.year',currentDate.year);
+        console.log('currentDate.month',currentDate.month);
+
         const itemsWithCategory = Object.keys(items).map(id => {
             items[id].category = categories[items[id].cid];
             return items[id]
         }).filter(item => {
-            return item.monthCategory.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
+            return item.monthCategory.includes(`${currentDate.year}-${currentDate.month}`)
         })
-
+        console.log("itemsWithCategory",itemsWithCategory);
 
         let totalIncome = 0, totalOutcome = 0;
         itemsWithCategory.forEach(item => {
@@ -66,6 +77,7 @@ class Home extends Component {
                 totalIncome += item.price
             }
         })
+
         return (
             <React.Fragment>
 
@@ -114,4 +126,4 @@ class Home extends Component {
     }
 }
 
-export default withContext(Home)
+export default withRouter(withContext(Home))

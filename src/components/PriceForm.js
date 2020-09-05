@@ -1,37 +1,39 @@
 import React, {Component} from "react";
-import { isValidDate } from '../unility'
+import {isValidDate} from '../unility'
 
 
 class PriceForm extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             submitPass: true,
-            errorMessage: ''
+            errorMessage: '',
+            item:{}
         }
     }
 
     submitForm = (event) => {
-        const { item,onSubmitForm } = this.props;
+        const {item, onSubmitForm} = this.props;
         const {editMode} = !!item.id
-        const title = this.titleInput.value.trim *1
-        const price = this.priceInput.value.trim
-        const date = this.dateInput.value.trim
+        const title = this.titleInput.value.trim() * 1
+        const price = this.priceInput.value.trim()
+        const date = this.dateInput.value.trim()
 
-        if (price && title && date) {
+        if (price && title && date ) {
             if (price < 0) {
                 this.setState({
                     submitPass: false,
-                    errorMessage: '金额不能小于0'
+                    errorMessage: '价格数字必须大于0'
                 })
-            }else if (!isValidDate(date)) {
+            } else if (!isValidDate(date)) {
                 this.setState({
-                    validatePass: false,
+                    submitPass: false,
                     errorMessage: '请填写正确的日期格式'
                 })
             } else {
                 this.setState({
-                    validatePass: true,
+                    submitPass: true,
                     errorMessage: ''
                 })
                 if (editMode) {
@@ -42,8 +44,8 @@ class PriceForm extends Component {
             }
         } else {
             this.setState({
-                submitPass: false,
-                errorMessage: '请输入所有项'
+                validatePass: false,
+                errorMessage: '请输入所有必选项'
             })
         }
         event.preventDefault()
@@ -54,7 +56,7 @@ class PriceForm extends Component {
         return (
             <form onSubmit={(event) => {
                 this.submitForm(event)
-            }}>
+            }} noValidate>
                 <div>
                     <label>标题*</label>
                     <input type="text"
@@ -87,10 +89,10 @@ class PriceForm extends Component {
                 </div>
                 <button type="submit">提交</button>
                 <button onClick={this.props.onCancelForm}>取消</button>
-                {!this.state.validatePass &&
-                <div className="alert alert-danger mt-5" role="alert">
-                    {this.state.errorMessage}
-                </div>
+                {!this.state.submitPass &&
+                    <div className="alert alert-danger mt-5" role="alert">
+                        {this.state.errorMessage}
+                    </div>
                 }
             </form>
         );

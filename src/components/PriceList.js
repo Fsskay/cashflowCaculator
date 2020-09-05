@@ -14,7 +14,8 @@ class PriceList extends Component {
                 {
                     items.map((item) => (
                         <li className="list-group-item d-flex
-                        justify-content-between align-item-center">
+                        justify-content-between align-item-center"
+                            key={item.id}>
                             <span className="col-1">{item.category.name}</span>
                             <span className="col-5">{item.title}</span>
                             <span className="col-2">{(item.category.type==="income")?'+':'-'}{item.price}</span>

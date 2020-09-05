@@ -248,8 +248,8 @@ export const testItems = [
   {
     "title": "吃晚饭",
     "price": 200,
-    "date": "2020-08-27",
-    "monthCategory": "2020-8",
+    "date": "2020-09-27",
+    "monthCategory": "2020-9",
     "id": "_31f50qnyx",
     "cid": "2"
   }

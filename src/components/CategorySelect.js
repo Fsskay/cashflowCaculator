@@ -30,13 +30,15 @@ class CategorySelect extends Component {
             <div className="row">
                 {
                     CategoriesOfSelect.map((category, index) => {
+                        const iconColor = (category.id === selectedCategoryId) ? Colors.white : Colors.gray;
+                        const backColor = (category.id === selectedCategoryId) ? Colors.blue : Colors.lightGray;
                         const activeClassName = (selectedCategoryId ===category.id)?'category-item col-3 selectedCategory-active':'category-item col-3';
                         return (
                             <div className={activeClassName}
                                  onClick={(event) => {
                                      this.selectCategory2(event, category)
                                  }}>
-                                <p>{category.name}</p>
+                                <p color={iconColor}>{category.name}</p>
                             </div>
                         )
                     })
