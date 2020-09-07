@@ -9,15 +9,16 @@ class PriceForm extends Component {
         this.state = {
             submitPass: true,
             errorMessage: '',
-            item:{}
         }
     }
 
     submitForm = (event) => {
         const {item, onSubmitForm} = this.props;
-        const {editMode} = !!item.id
-        const title = this.titleInput.value.trim() * 1
-        const price = this.priceInput.value.trim()
+        const editMode = !!item.id
+        console.log(item.id)
+        console.log('是编辑模式?=>',editMode)
+        const title = this.titleInput.value.trim()
+        const price = this.priceInput.value.trim() * 1
         const date = this.dateInput.value.trim()
 
         if (price && title && date ) {
@@ -38,6 +39,7 @@ class PriceForm extends Component {
                 })
                 if (editMode) {
                     onSubmitForm({...item, title, price, date}, editMode)
+
                 } else {
                     onSubmitForm({title, price, date}, editMode)
                 }
@@ -54,9 +56,10 @@ class PriceForm extends Component {
     render() {
         const {title, price, date} = this.props.item
         return (
+            <React.Fragment>
             <form onSubmit={(event) => {
                 this.submitForm(event)
-            }} noValidate>
+            }} style={{background: '#fff'}}>
                 <div>
                     <label>标题*</label>
                     <input type="text"
@@ -95,6 +98,7 @@ class PriceForm extends Component {
                     </div>
                 }
             </form>
+            </React.Fragment>
         );
     }
 }

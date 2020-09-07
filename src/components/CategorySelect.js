@@ -24,7 +24,7 @@ class CategorySelect extends Component {
     render() {
         const {CategoriesOfSelect,selectedCategory} = this.props
         const selectedCategoryId = selectedCategory && selectedCategory.id
-        console.log('CategoriesOfSelect', CategoriesOfSelect);
+
         return (
 
             <div className="row">

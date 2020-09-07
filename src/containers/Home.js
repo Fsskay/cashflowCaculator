@@ -51,23 +51,14 @@ class Home extends Component {
     render() {
         const {data} = this.props
         const {items, categories} = data
-        console.log('data',data)
-        console.log('items',items)
-        console.log('categories',categories)
-
-
         const {currentDate, tabView} = this.state
-        console.log('currentDate',currentDate);
-        console.log('currentDate.year',currentDate.year);
-        console.log('currentDate.month',currentDate.month);
-
         const itemsWithCategory = Object.keys(items).map(id => {
             items[id].category = categories[items[id].cid];
             return items[id]
         }).filter(item => {
             return item.monthCategory.includes(`${currentDate.year}-${currentDate.month}`)
         })
-        console.log("itemsWithCategory",itemsWithCategory);
+
 
         let totalIncome = 0, totalOutcome = 0;
         itemsWithCategory.forEach(item => {

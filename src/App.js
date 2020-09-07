@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css'
-
 import './App.css';
 import Home from './containers/Home'
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
@@ -25,16 +23,25 @@ class App extends Component {
             })
         },
         createItem:(data,selectedCategoryID)=>{
-            console.log('传出的数据',data);
-            console.log('传出的种类的id',selectedCategoryID);
             const newId = ID()
             const parsedDate = parseToYearAndMonth(data.date)
             data.monthCategory = `${parsedDate.year}-${parsedDate.month}`
             data.timestamp = new Date(data.date).getTime()
             const newItem = {...data,id:newId,cid:selectedCategoryID}
-            console.log('newItem',newItem);
+
             this.setState({
                 items:{...this.state.items,[newId]:newItem}
+            })
+        },
+        updateItem:(item,updatedCategoryId)=>{
+            //编辑好的item,加上cid与timestamp
+            const modifiedItem = {
+                ...item,
+                cid:updatedCategoryId,
+                timestamp:new Date(item.date).getTime()
+            }
+            this.setState({
+                items:{...this.state.items,[modifiedItem.id]:modifiedItem}
             })
         }
     }

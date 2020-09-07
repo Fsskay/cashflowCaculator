@@ -11,26 +11,20 @@ const tabsText = [TYPE_OUTCOME, TYPE_INCOME]
 //
 
 
-const editItem = [{
-    "title": "再次更新标题",
-    "price": 2000,
-    "date": "2018-09-15",
-    "monthCategory": "2018-9",
-    "id": "_qmatbbwq0",
-    "cid": "6",
-    "timestamp": 1536969600000
-}]
 
 
 
 class Create extends Component {
     constructor(props) {
         super(props);
+        const {id} = props.match.params
+        const {categories,items} = props.data
         this.state = {
-            selectedTab:TYPE_OUTCOME,
+            //先拿到id上的cid,然后再从categories上取
+            //(id && items[id])?是用于edit页面选定categories
+            selectedTab:(id && items[id])? categories[items[id].cid].type:TYPE_OUTCOME,
             tabsText: tabsText[0],
-            selectedCategory: null,
-            filterCategories:[]
+            selectedCategory:(id && items[id])? categories[items[id].cid]:null,
         }
     }
 
@@ -49,9 +43,16 @@ class Create extends Component {
     //传入data和editMode,传给createItem 数据和选择好的类目的id
     submitFormForCreate = (data, editMode) => {
         if (!editMode) {
+            //  createItem()
+            console.log("this.props.actions.createItem 上")
             this.props.actions.createItem(data,this.state.selectedCategory.id)
+            console.log("this.props.actions.createItem 下")
         } else {
             // updateItem()
+            console.log("this.props.actions.updateItem上")
+            this.props.actions.updateItem(data,this.state.selectedCategory.id)
+            console.log("this.props.actions.updateItem下")
+
         }
         this.props.history.push('/')
     }
@@ -63,20 +64,24 @@ class Create extends Component {
     render() {
         const {data} = this.props
         const {items, categories, } = data
+        const {id} = this.props.match.params
+        //拿到当前路由有关的ID,用于显示编辑页面input内的内容
+
+        const editItem=(id&&items[id])?items[id]:{}
+        console.log('editItem',editItem)
         const {selectedTab,selectedCategory} = this.state
         //删选类别不同的category,先变成数组,筛选出selectedTab相同的category
         const filterCategories = Object.keys(categories)
             .filter(id => categories[id].type === selectedTab)
             .map(id => categories[id]);
 
-        console.log('filterCategories', filterCategories)
-        console.log('selectedCategory',selectedCategory);
 
-
+        const tabIndex = tabsText.findIndex(text=>text===selectedTab)
+        //这一条的作用是用于显示create/edit页面的Tab高亮
         return (
             <React.Fragment>
             <div>
-                <Tabs onChangeTabs={this.createTabChange}>
+                <Tabs activeIndex={tabIndex} onChangeTabs={this.createTabChange}>
                     <Tab>
                         支出
                     </Tab>

@@ -20,8 +20,8 @@ class PriceList extends Component {
                             <span className="col-5">{item.title}</span>
                             <span className="col-2">{(item.category.type==="income")?'+':'-'}{item.price}</span>
                             <span className="col-2">{item.date}</span>
-                            <a href="#" className="col-1" onClick={(event)=>{onModifyItem(item)}}>编辑</a>
-                            <a href="#" onClick={(event)=>{onDeleteItem(item)}} className="col-1">删除</a>
+                            <a className="col-1" onClick={(event)=>{onModifyItem(item)}}>编辑</a>
+                            <a onClick={(event)=>{onDeleteItem(item)}} className="col-1">删除</a>
                         </li>
                     ))
                 }
