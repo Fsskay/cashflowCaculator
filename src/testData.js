@@ -99,19 +99,19 @@ export const testCategories = [
 
 export const testItems = [
   {
-    "title": "再次更新标题",
+    "title": "玩",
     "price": 2000,
-    "date": "2018-09-15",
-    "monthCategory": "2018-9",
+    "date": "2020-09-15",
+    "monthCategory": "2020-9",
     "id": "_qmatbbwq0",
     "cid": "6",
     "timestamp": 1536969600000
   },
   {
-    "title": "新的吃饭",
+    "title": "吃饭",
     "price": 2000,
-    "date": "2018-11-15",
-    "monthCategory": "2018-11",
+    "date": "2020-09-15",
+    "monthCategory": "2020-9",
     "id": "_qmatbbw11",
     "cid": "6",
     "timestamp": 1542896269187
@@ -119,8 +119,8 @@ export const testItems = [
   {
     "title": "请别人喝茶",
     "price": 300,
-    "date": "2018-11-15",
-    "monthCategory": "2018-11",
+    "date": "2020-10-15",
+    "monthCategory": "2020-10",
     "id": "_qryggm533",
     "cid": "3",
     "timestamp": 1534291200000
@@ -128,8 +128,8 @@ export const testItems = [
   {
     "title": "饭局",
     "price": 200,
-    "date": "2018-12-10",
-    "monthCategory": "2018-12",
+    "date": "2020-10-15",
+    "monthCategory": "2020-10",
     "id": "_qmatbbw12",
     "cid": "6",
     "timestamp": 1544400000000
@@ -137,8 +137,8 @@ export const testItems = [
   {
     "title": "饭局第二个",
     "price": 300,
-    "date": "2018-12-10",
-    "monthCategory": "2018-12",
+    "date": "2020-10-15",
+    "monthCategory": "2020-10",
     "id": "_qmatbbw22",
     "cid": "6",
     "timestamp": 1544400000000
@@ -146,8 +146,8 @@ export const testItems = [
   {
     "title": "兼职收入",
     "price": 500,
-    "date": "2018-12-05",
-    "monthCategory": "2018-12",
+    "date": "2020-10-15",
+    "monthCategory": "2020-10",
     "timestamp": 1543968000000,
     "id": "_2cdxkbtzi",
     "cid": "11"
@@ -155,8 +155,8 @@ export const testItems = [
   {
     "title": "收入",
     "price": 100,
-    "date": "2018-12-05",
-    "monthCategory": "2018-12",
+    "date": "2020-09-05",
+    "monthCategory": "2020-9",
     "timestamp": 1543968000000,
     "id": "_znmwyaciy",
     "cid": "12"
@@ -164,8 +164,8 @@ export const testItems = [
   {
     "title": "汽车保养",
     "price": 500,
-    "date": "2018-12-09",
-    "monthCategory": "2018-12",
+    "date": "2020-09-09",
+    "monthCategory": "2020-9",
     "timestamp": 1544313600000,
     "id": "_2c96vz8d7",
     "cid": "7"
@@ -173,8 +173,8 @@ export const testItems = [
   {
     "title": "宠物美容",
     "price": 200,
-    "date": "2018-12-07",
-    "monthCategory": "2018-12",
+    "date": "2020-09-07",
+    "monthCategory": "2020-9",
     "timestamp": 1544140800000,
     "id": "_dgqbpp4z8",
     "cid": "9"
@@ -182,8 +182,8 @@ export const testItems = [
   {
     "title": "超市购物",
     "price": 125,
-    "date": "2018-12-04",
-    "monthCategory": "2018-12",
+    "date": "2020-09-04",
+    "monthCategory": "2020-9",
     "timestamp": 1543881600000,
     "id": "_j0z9no9jk",
     "cid": "3"
@@ -191,8 +191,8 @@ export const testItems = [
   {
     "title": "购买 iphone XR",
     "price": 6000,
-    "date": "2018-12-03",
-    "monthCategory": "2018-12",
+    "date": "2020-09-03",
+    "monthCategory": "2020-9",
     "timestamp": 1543795200000,
     "id": "_yiwdttati",
     "cid": "4"
@@ -200,8 +200,8 @@ export const testItems = [
   {
     "title": "入账工资",
     "price": 25000,
-    "date": "2018-12-08",
-    "monthCategory": "2018-12",
+    "date": "2020-09-08",
+    "monthCategory": "2020-9",
     "timestamp": 1544227200000,
     "id": "_dotug7vnn",
     "cid": "10",
@@ -215,8 +215,8 @@ export const testItems = [
   {
     "title": "新的旅行条目",
     "price": 10000,
-    "date": "2019-01-05",
-    "monthCategory": "2019-1",
+    "date": "2020-09-05",
+    "monthCategory": "2020-9",
     "timestamp": 1546646400000,
     "id": "_cg4a9gzya",
     "cid": "1"
@@ -224,32 +224,32 @@ export const testItems = [
   {
     "title": "工资",
     "price": 8000,
-    "date": "2020-08-27",
-    "monthCategory": "2020-8",
+    "date": "2020-09-27",
+    "monthCategory": "2020-9",
     "id": "_03nu5lt9s",
     "cid": "10"
   },
   {
     "title": "早茶",
     "price": 300,
-    "date": "2020-08-27",
-    "monthCategory": "2020-8",
+    "date": "2020-10-27",
+    "monthCategory": "2020-10",
     "id": "_gbju6j907",
     "cid": "2"
   },
   {
     "title": "去上海",
     "price": 1000,
-    "date": "2020-07-27",
-    "monthCategory": "2020-7",
+    "date": "2020-10-27",
+    "monthCategory": "2020-10",
     "id": "_caqebqa62",
     "cid": "1"
   },
   {
     "title": "吃晚饭",
     "price": 200,
-    "date": "2020-09-27",
-    "monthCategory": "2020-9",
+    "date": "2020-10-27",
+    "monthCategory": "2020-10",
     "id": "_31f50qnyx",
     "cid": "2"
   }

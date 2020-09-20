@@ -25,6 +25,7 @@ class Create extends Component {
             selectedTab:(id && items[id])? categories[items[id].cid].type:TYPE_OUTCOME,
             tabsText: tabsText[0],
             selectedCategory:(id && items[id])? categories[items[id].cid]:null,
+            validationPassed: true,
         }
     }
 
@@ -42,6 +43,12 @@ class Create extends Component {
     }
     //传入data和editMode,传给createItem 数据和选择好的类目的id
     submitFormForCreate = (data, editMode) => {
+        if (!this.state.selectedCategory) {
+            this.setState({
+                validationPassed: false,
+            });
+            return
+        }
         if (!editMode) {
             //  createItem()
             console.log("this.props.actions.createItem 上")
@@ -69,7 +76,7 @@ class Create extends Component {
 
         const editItem=(id&&items[id])?items[id]:{}
         console.log('editItem',editItem)
-        const {selectedTab,selectedCategory} = this.state
+        const {selectedTab,selectedCategory,validationPassed} = this.state
         //删选类别不同的category,先变成数组,筛选出selectedTab相同的category
         const filterCategories = Object.keys(categories)
             .filter(id => categories[id].type === selectedTab)
@@ -80,7 +87,7 @@ class Create extends Component {
         //这一条的作用是用于显示create/edit页面的Tab高亮
         return (
             <React.Fragment>
-            <div>
+            <div className="create-page py-3 px-3 rounded mt-3" style={{background: '#fff', padding: 20}}>
                 <Tabs activeIndex={tabIndex} onChangeTabs={this.createTabChange}>
                     <Tab>
                         支出
@@ -93,6 +100,11 @@ class Create extends Component {
                                 selectedCategory={selectedCategory}/>
 
                 <PriceForm item={editItem} onSubmitForm={this.submitFormForCreate} onCancelForm={this.cancelForm}/>
+                { !validationPassed &&
+                <div className="alert alert-danger mt-5" role="alert">
+                    请选择分类信息
+                </div>
+                }
             </div>
             </React.Fragment>
         );
