@@ -5,13 +5,11 @@ import withContext from "../WithContext";
 import CategorySelect from '../components/CategorySelect'
 import PriceForm from '../components/PriceForm'
 import {withRouter} from 'react-router-dom'
-
-const tabsText = [TYPE_OUTCOME, TYPE_INCOME]
-
-//
+import Ionicon from "react-ionicons";
 
 
 
+const tabsText = [TYPE_INCOME,TYPE_OUTCOME]
 
 
 class Create extends Component {
@@ -22,14 +20,13 @@ class Create extends Component {
         this.state = {
             //先拿到id上的cid,然后再从categories上取
             //(id && items[id])?是用于edit页面选定categories
-            selectedTab:(id && items[id])? categories[items[id].cid].type:TYPE_OUTCOME,
+            selectedTab:(id && items[id])? categories[items[id].cid].type:TYPE_INCOME,
             tabsText: tabsText[0],
             selectedCategory:(id && items[id])? categories[items[id].cid]:null,
             validationPassed: true,
         }
     }
-
-
+    
     selectCategory = (category) => {
         this.setState({
             selectedCategory: category
@@ -38,7 +35,8 @@ class Create extends Component {
 
     createTabChange = (index) => {
         this.setState({
-            selectedTab: tabsText[index]
+            selectedTab: tabsText[index],
+            selectedCategory: null
         })
     }
     //传入data和editMode,传给createItem 数据和选择好的类目的id
@@ -51,18 +49,16 @@ class Create extends Component {
         }
         if (!editMode) {
             //  createItem()
-            console.log("this.props.actions.createItem 上")
             this.props.actions.createItem(data,this.state.selectedCategory.id)
-            console.log("this.props.actions.createItem 下")
         } else {
             // updateItem()
-            console.log("this.props.actions.updateItem上")
             this.props.actions.updateItem(data,this.state.selectedCategory.id)
-            console.log("this.props.actions.updateItem下")
 
         }
-        this.props.history.push('/')
+        this.props.history.push('/submit')
     }
+
+
 
     cancelForm = () => {
         this.props.history.push('/')
@@ -75,7 +71,6 @@ class Create extends Component {
         //拿到当前路由有关的ID,用于显示编辑页面input内的内容
 
         const editItem=(id&&items[id])?items[id]:{}
-        console.log('editItem',editItem)
         const {selectedTab,selectedCategory,validationPassed} = this.state
         //删选类别不同的category,先变成数组,筛选出selectedTab相同的category
         const filterCategories = Object.keys(categories)
@@ -90,10 +85,10 @@ class Create extends Component {
             <div className="create-page py-3 px-3 rounded mt-3" style={{background: '#fff', padding: 20}}>
                 <Tabs activeIndex={tabIndex} onChangeTabs={this.createTabChange}>
                     <Tab>
-                        支出
+                        <strong>收入</strong>
                     </Tab>
                     <Tab>
-                        收入
+                        <strong>支出</strong>
                     </Tab>
                 </Tabs>
                 <CategorySelect CategoriesOfSelect={filterCategories} onSelectCategory={this.selectCategory}
@@ -106,6 +101,7 @@ class Create extends Component {
                 </div>
                 }
             </div>
+
             </React.Fragment>
         );
     }

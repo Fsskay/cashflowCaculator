@@ -1,34 +1,17 @@
 import React, {Component} from "react";
 import {Tabs, Tab} from '../components/Tabs'
 import PriceList from "../components/PriceList";
-import MonthPicker from "../components/MonthPicker"
 import CreateBtn from "../components/CreateBtn";
 import {parseToYearAndMonth, flatternArr, padLeft, LIST_VIEW, CHART_VIEW, TYPE_INCOME, TYPE_OUTCOME} from '../unility'
 import TotalPrice from "../components/TotalPrice"
-import {testCategories, testItems} from "../testData"
-import PieChart from "../components/PieChart"
+import TotalOutcome from '../components/TotalOutcome'
+import TotalIncome from '../components/TotalIncome'
 import withContext from "../WithContext";
 import {withRouter} from 'react-router-dom'
-
-
+import {Collapse, BackTop} from 'antd';
+import PieChart from '../components/PieChart'
+import logo from '../logo.svg';
 const tabsText = [LIST_VIEW, CHART_VIEW]
-
-const generateChartDataByCategory = (items, type = TYPE_INCOME) => {
-    let categoryMap = {}
-    items.filter(item => item.category.type === type).forEach(item => {
-        if (categoryMap[item.cid]) {
-            categoryMap[item.cid].value += (item.price * 1)
-            categoryMap[item.cid].items.push(item.id)
-        } else {
-            categoryMap[item.cid] = {
-                name: item.category.name,
-                value: item.price * 1,
-                items: [item.id]
-            }
-        }
-    })
-    return Object.keys(categoryMap).map(mapKey => ({...categoryMap[mapKey]}))
-}
 
 class Home extends Component {
     constructor(props) {
@@ -38,19 +21,6 @@ class Home extends Component {
             tabView: tabsText[0],
             itemsWithCategory: []
         }
-    }
-
-
-    changeDate = (year, month) => {
-        this.setState({
-            currentDate: {year, month}
-        })
-    }
-
-    homeChangeViews = (index) => {
-        this.setState({
-            tabView: tabsText[index]
-        })
     }
 
 
@@ -66,6 +36,8 @@ class Home extends Component {
 
 
     render() {
+
+        const {Panel} = Collapse;
         const {data} = this.props
         const {items, categories} = data
         const {currentDate, tabView} = this.state
@@ -76,8 +48,27 @@ class Home extends Component {
             return item.monthCategory.includes(`${currentDate.year}-${currentDate.month}`)
         })
 
-        const chartOutcomDataByCategory = generateChartDataByCategory(itemsWithCategory, TYPE_OUTCOME)
-        const chartIncomeDataByCategory = generateChartDataByCategory(itemsWithCategory, TYPE_INCOME)
+        //固定支出数据
+        const itemsOfFixedOutcome = itemsWithCategory.filter(item => {
+            return item.category.outcomeType === 'fixed'
+        })
+
+        //弹性支出数据
+        const itemsOfFlexibleOutcome = itemsWithCategory.filter(item => {
+            return item.category.outcomeType === 'flexible'
+        })
+
+
+        //主动收入数据
+        const itemsOfActiveIncome = itemsWithCategory.filter(item => {
+            return item.category.incomeType === 'active'
+        })
+
+        //被动收入数据
+        const itemsOfPassiveIncome = itemsWithCategory.filter(item => {
+            return item.category.incomeType === 'passive'
+        })
+
 
         let totalIncome = 0, totalOutcome = 0;
         itemsWithCategory.forEach(item => {
@@ -88,52 +79,84 @@ class Home extends Component {
             }
         })
 
+        let flexibleOutcome = 0, fixedOutcome = 0;
+        itemsWithCategory.forEach(item => {
+            if (item.category.outcomeType === 'flexible') {
+                flexibleOutcome += item.price
+            }
+        })
+
+        itemsWithCategory.forEach(item => {
+            if (item.category.outcomeType === 'fixed') {
+                fixedOutcome += item.price
+            }
+        })
+
+        let activeIncome = 0, passiveIncome = 0;
+        itemsWithCategory.forEach(item => {
+            if (item.category.incomeType === 'active') {
+                activeIncome += item.price
+            }
+        })
+
+        itemsWithCategory.forEach(item => {
+            if (item.category.incomeType === 'passive') {
+                passiveIncome += item.price
+            }
+        })
+
+        //现金流
+        let moneyFlow = (totalIncome - totalOutcome)
+
+
+
         return (
             <React.Fragment>
-                <div  className="App-header">
+                <div className="App-header">
+                    <div className="row justify-content-center">
+                        <img src={logo} className="App-logo" alt="logo"/>
+                    </div>
+                    <div className="row justify-content-center align-content-center">
+                        <h3 style={{color: "white", textAlign: "center"}}>您的结余:<br/>
+                            {moneyFlow}</h3>
+                    </div>
                     <div className="row">
                         <div className="col">
-                            <MonthPicker
-                                year={currentDate.year}
-                                month={currentDate.month}
-                                onChange={this.changeDate}
-                            />
-                        </div>
-                        <div className="col">
                             <TotalPrice income={totalIncome} outcome={totalOutcome}/>
+                            <TotalIncome income={activeIncome} outcome={fixedOutcome}/>
+                            <TotalOutcome income={passiveIncome} outcome={flexibleOutcome}/>
                         </div>
                     </div>
                 </div>
-                <div className="content-area py-3 px-3">
-                    <React.Fragment>
-                        <Tabs activeIndex={0} onChangeTabs={this.homeChangeViews}>
-                            <Tab>
-                                列表模式
-                            </Tab>
-                            <Tab>
-                                图表模式
-                            </Tab>
-                        </Tabs>
-                    </React.Fragment>
-                    <CreateBtn CreateBtnOnClick={this.createItem}/>
+                <div className="content-area py-1 px-1">
 
-                {
-                    tabView === LIST_VIEW &&
-                    <PriceList items={itemsWithCategory} onDeleteItem={this.deleteItem} onModifyItem={this.modifyItem}/>
-                }
-                {tabView === LIST_VIEW && itemsWithCategory.length === 0 &&
-                <div className="alert alert-light text-center no-record">
-                    您还没有任何记账记录
+                    <CreateBtn CreateBtnOnClick={this.createItem}/>
+                    <br/>
+                    <Collapse defaultActiveKey={['1']}>
+                        <Panel header="主动收入" key="1">
+                            <PriceList items={itemsOfActiveIncome} onDeleteItem={this.deleteItem}
+                                       onModifyItem={this.modifyItem}/>
+                        </Panel>
+                        <Panel header="被动收入" key="2">
+                            <PriceList items={itemsOfPassiveIncome} onDeleteItem={this.deleteItem}
+                                       onModifyItem={this.modifyItem}/>
+                        </Panel>
+                        <Panel header="固定支出" key="3">
+                            <PriceList items={itemsOfFixedOutcome} onDeleteItem={this.deleteItem}
+                                       onModifyItem={this.modifyItem}/>
+                        </Panel>
+                        <Panel header="弹性支出" key="4">
+                            <PriceList items={itemsOfFlexibleOutcome} onDeleteItem={this.deleteItem}
+                                       onModifyItem={this.modifyItem}/>
+                        </Panel>
+                    </Collapse>
                 </div>
-                }
-                {
-                    tabView === CHART_VIEW &&
-                    <React.Fragment>
-                        <PieChart title="本月支出" categoryData={chartOutcomDataByCategory}/>
-                        <PieChart title="本月收入" categoryData={chartIncomeDataByCategory}/>
-                    </React.Fragment>
-                }
+                <div>
+                    <BackTop>
+                        <div className="site-back-top-basic">回到顶部</div>
+                    </BackTop>
                 </div>
+
 
             </React.Fragment>
         )

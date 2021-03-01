@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import {testCategories, testItems} from "./testData"
 import {flatternArr,parseToYearAndMonth,ID} from "./unility";
 import Create from './containers/Create'
+import SubmitSuccess from './containers/SubmitSuccess'
 export const AppContext = React.createContext();
 
 class App extends Component {
@@ -28,7 +29,6 @@ class App extends Component {
             data.monthCategory = `${parsedDate.year}-${parsedDate.month}`
             data.timestamp = new Date(data.date).getTime()
             const newItem = {...data,id:newId,cid:selectedCategoryID}
-
             this.setState({
                 items:{...this.state.items,[newId]:newItem}
             })
@@ -48,25 +48,22 @@ class App extends Component {
   }
 
 
-
-
   render() {
     return (
         <AppContext.Provider value={{
           state: this.state,
           actions: this.actions
         }}>
-
             <Router>
                 <div className="App">
                     <div className="container  pb-5">
                         <Route path="/" exact component={Home}/>
                         <Route path="/Create" component={Create}/>
                         <Route path="/edit/:id" component={Create}/>
+                        <Route path="/Submit" component={SubmitSuccess}/>
                     </div>
                 </div>
             </Router>
-
         </AppContext.Provider>
     );
   }

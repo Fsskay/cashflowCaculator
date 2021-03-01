@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types'
-import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from 'recharts'
+import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer,Label } from 'recharts'
 import {Colors} from "../unility";
 
 const ColorsArr = Object.keys(Colors).map(key=>Colors[key])
@@ -23,10 +22,12 @@ const CustomPieChart = ({title,categoryData}) =>{
                         cy='50%'
                         outerRadius={100}
                         fill="8884d8"
-                        label
+                        label={title}
+
                     >
                         {
-                            categoryData.map((entry,index)=><Cell key={index} fill={ColorsArr[index%ColorsArr.length]}/>)
+                            categoryData.map((entry,index)=><Cell key={index} dataKey="value" data={categoryData} label={{value:categoryData.name}} fill={ColorsArr[index%ColorsArr.length]}/>
+                                )
                         }
                     </Pie>
                     <Tooltip/>

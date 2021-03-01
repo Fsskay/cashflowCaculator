@@ -1,4 +1,5 @@
 import React from "react";
+import Ionicon from 'react-ionicons'
 
 const CreatBtn = ({CreateBtnOnClick}) =>(
     <button
@@ -6,7 +7,13 @@ const CreatBtn = ({CreateBtnOnClick}) =>(
         style={{marginTop:5}}
 
         onClick={(event)=>{CreateBtnOnClick()}}>
-        创建一个新的记账记录
+        <Ionicon
+            className="rounded-circle CreateBtn"
+            fontSize="10px"
+            color='#fff'
+            icon='ios-add-circle'
+        />
+        <strong>创建一条新的收支记录</strong>
 
     </button>
 )
